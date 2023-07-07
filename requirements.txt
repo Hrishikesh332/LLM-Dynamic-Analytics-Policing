@@ -3,4 +3,3 @@ langchain
 tabulate
 streamlit
 pandas
-json
