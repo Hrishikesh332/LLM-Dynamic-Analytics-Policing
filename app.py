@@ -40,7 +40,7 @@ st.write("Please upload your Chicago Crime CSV file")
 
 data = st.file_uploader("Upload a CSV")
 
-query = st.text_area("Please do ask here to get insights from the CSV - ")
+query = st.text_input("Please do ask here to get insights from the CSV - ")
 def agent(filename: str):
 
     llm = OpenAI(openai_api_key=API_KEY)
