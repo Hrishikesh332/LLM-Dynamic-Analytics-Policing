@@ -1,0 +1,6 @@
+openai
+langchain
+tabulate
+streamlit
+pandas
+json
