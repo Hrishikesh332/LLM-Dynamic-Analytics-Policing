@@ -71,9 +71,7 @@ with st.sidebar:
 
 
 query = st.text_input("Please do ask here to get insights from the CSV - ")
-def agent(filename: str):
 
-query = st.text_input("Please do ask here to get insights from the CSV - ")
 def agent(df):
     llm = OpenAI(openai_api_key=API_KEY)
 
