@@ -36,16 +36,47 @@ st.markdown("<h1 style='text-align: center; color: white';>Dynamic Analytics Cri
 st.markdown("---")
 
 
-st.write("Please upload your Chicago Crime CSV file")
+# st.write("Please upload your Chicago Crime CSV file")
 
-data = st.file_uploader("Upload a CSV")
+# data = st.file_uploader("Upload a CSV")
 
-query = st.text_area("Please do ask here to get insights from the CSV - ")
-def agent(filename: str):
+file_path = "Crimes-2023.csv"  
+df = pd.read_csv(file_path)
 
+with st.sidebar:
+    st.title("Dataset Description")
+    st.write("This dataset contains information about crimes in the year 2023.")
+    st.write("It includes various attributes such as ID, Case Number, Date, Block, Primary Type, Location Description, Arrest, and more.")
+
+    st.subheader("Dataset Features")
+    crime_counts = df.columns
+    result = ", ".join(crime_counts)
+    st.write(result)
+
+
+    st.write(f"The dataset consists of {len(df)} records.")
+
+    st.header("Exploring Crime Dataset")
+    st.subheader("Dataset Overview")
+    st.write("Here's an overview of the dataset:")
+    st.dataframe(df.head())
+
+    st.subheader("Dataset Statistics")
+    st.write("Here are some statistics about the dataset:")
+    st.write(df.describe())
+
+    st.subheader("Crime Types")
+    crime_counts = df["Primary Type"].value_counts()
+    st.bar_chart(crime_counts)
+
+
+
+query = st.text_input("Please do ask here to get insights from the CSV - ")
+def agent(df):
     llm = OpenAI(openai_api_key=API_KEY)
-    df = pd.read_csv(filename)
+
     return create_pandas_dataframe_agent(llm, df, verbose=False)
+
 
 def query_llm(agent, query):
 
@@ -87,6 +118,38 @@ def query_llm(agent, query):
     response = agent.run(prompt)
     return response.__str__()
 
+
+
+def query_analysis(agent):
+
+    prompt = (
+        """
+
+            If you do not know the answer, reply as follows:
+            {"answer": "I do not know."}
+
+            Return all output as a string.
+
+            All strings in "columns" list and data list, should be in double quotes,
+
+            For example: {"columns": ["title", "ratings_count"], "data": [["Gilead", 361], ["Spider's Web", 5164]]}
+
+            Lets think step by step.
+
+            Below is the query.
+            Query:Prepare the analytical questions by looking the realtion, trend and behavior of the various columns in the csv file
+
+            The Response should be in the question pointers separated by a number
+            Response: 
+            """
+    )
+
+    response = agent.run(prompt)
+    return response.__str__()
+
+
+
+
 def decode_response(response: str) -> dict:
 
     return json.loads(response)
@@ -114,9 +177,18 @@ def write_response(response_dict: dict):
         df = pd.DataFrame(data["data"], columns=data["columns"])
         st.table(df)
 
+
+
+if st.button("Get Question", type="primary"):
+            agent = agent(df)
+            response = query_analysis(agent=agent)
+            decoded_response = decode_response(response)
+            write_response(decoded_response)
+
+
 if st.button("Submit Query", type="primary"):
 
-    agent = agent(data)
+    agent = agent(df)
     response = query_llm(agent=agent, query=query)
     decoded_response = decode_response(response)
     write_response(decoded_response)
