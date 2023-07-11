@@ -70,6 +70,8 @@ with st.sidebar:
     st.bar_chart(crime_counts)
 
 
+query = st.text_input("Please do ask here to get insights from the CSV - ")
+def agent(filename: str):
 
 query = st.text_input("Please do ask here to get insights from the CSV - ")
 def agent(df):
