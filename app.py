@@ -6,7 +6,7 @@ from langchain.agents import create_pandas_dataframe_agent
 import pandas as pd
 
 
-API_KEY = st.secrets["API"]
+API_KEY = "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"
 
 
 
@@ -139,12 +139,12 @@ def query_analysis(agent):
             Below is the query.
             Query:Prepare the analytical questions by looking the realtion, trend and behavior of the various columns in the csv file
 
-            The Response should be in the question pointers separated by a number
+            The Response should be multiple questions all in one string
             Response: 
             """
     )
 
-    response = agent.run(prompt)
+    response = str(agent.run(prompt))
     return response.__str__()
 
 
@@ -177,18 +177,19 @@ def write_response(response_dict: dict):
         df = pd.DataFrame(data["data"], columns=data["columns"])
         st.table(df)
 
+col_1, col_2= st.columns(2)
 
+with col_1:
+    if st.button("Get Question", type="primary"):
+                agent = agent(df)
+                response = query_analysis(agent=agent)
+                decoded_response = decode_response(response)
+                write_response(decoded_response)
 
-if st.button("Get Question", type="primary"):
-            agent = agent(df)
-            response = query_analysis(agent=agent)
-            decoded_response = decode_response(response)
-            write_response(decoded_response)
+with col_2:
+    if st.button("Submit Query", type="primary"):
 
-
-if st.button("Submit Query", type="primary"):
-
-    agent = agent(df)
-    response = query_llm(agent=agent, query=query)
-    decoded_response = decode_response(response)
-    write_response(decoded_response)
+        agent = agent(df)
+        response = query_llm(agent=agent, query=query)
+        decoded_response = decode_response(response)
+        write_response(decoded_response)
