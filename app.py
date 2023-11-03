@@ -6,8 +6,7 @@ from langchain.agents import create_pandas_dataframe_agent
 import pandas as pd
 
 
-API_KEY = "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"
-
+API_KEY = st.secrets["API_Key"]
 
 
 page_element="""
@@ -75,7 +74,7 @@ query = st.text_input("Please do ask here to get insights from the CSV - ")
 def agent(df):
     llm = OpenAI(openai_api_key=API_KEY)
 
-    return create_pandas_dataframe_agent(llm, df, verbose=False)
+    return create_pandas_dataframe_agent(llm, df, verbose=False, handle_parsing_errors=True)
 
 
 def query_llm(agent, query):
@@ -137,7 +136,7 @@ def query_analysis(agent):
             Lets think step by step.
 
             Below is the query.
-            Query:Prepare the analytical questions by looking the realtion, trend and behavior of the various columns in the csv file
+            Query:Prepare the analytical questions by looking the complex realtion, trend and behavior of the various columns in the csv file
 
             The Response should be multiple questions all in one string
             Response: 
