@@ -7,7 +7,7 @@ import pandas as pd
 
 
 API_KEY = st.secrets["API_KEY"]
-df=df.dropna()
+
 
 page_element="""
 <style>
@@ -41,7 +41,7 @@ st.markdown("---")
 
 file_path = "Crimes-2023.csv"  
 df = pd.read_csv(file_path)
-
+df=df.dropna()
 with st.sidebar:
     st.title("Dataset Description")
     st.write("This dataset contains information about crimes in the year 2023.")
