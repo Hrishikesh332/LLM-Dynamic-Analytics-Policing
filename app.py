@@ -7,7 +7,7 @@ import pandas as pd
 
 
 API_KEY = st.secrets["API_KEY"]
-
+df=df.dropna()
 
 page_element="""
 <style>
