@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 import json
 from langchain import OpenAI
-from langchain.agents import create_pandas_dataframe_agent
+from langchain_experimental.agents.agent_toolkits.pandas.base import create_pandas_dataframe_agent
 import pandas as pd
 
 
-API_KEY = st.secrets["API_Key"]
+API_KEY = st.secrets["API_KEY"]
 
 
 page_element="""
@@ -74,7 +74,7 @@ query = st.text_input("Please do ask here to get insights from the CSV - ")
 def agent(df):
     llm = OpenAI(openai_api_key=API_KEY)
 
-    return create_pandas_dataframe_agent(llm, df, verbose=False, handle_parsing_errors=True)
+    return create_pandas_dataframe_agent(llm, df, verbose=False)
 
 
 def query_llm(agent, query):

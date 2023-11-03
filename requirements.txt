@@ -3,3 +3,5 @@ langchain
 tabulate
 streamlit
 pandas
+langchain_experimental
+langchain
