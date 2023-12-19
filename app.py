@@ -179,11 +179,12 @@ def write_response(response_dict: dict):
 col_1, col_2= st.columns(2)
 
 with col_1:
-    if st.button("Get Question", type="primary"):
-                agent = agent(df)
-                response = query_analysis(agent=agent)
-                decoded_response = decode_response(response)
-                write_response(decoded_response)
+    # if st.button("Get Question", type="primary"):
+    #             agent = agent(df)
+    #             response = query_analysis(agent=agent)
+    #             decoded_response = decode_response(response)
+    #             write_response(decoded_response)
+    pass
 
 with col_2:
     if st.button("Submit Query", type="primary"):
