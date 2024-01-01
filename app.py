@@ -39,34 +39,34 @@ st.markdown("---")
 
 # data = st.file_uploader("Upload a CSV")
 
-file_path = "Crimes-2023.csv"  
+file_path = "fir_rajasthan.csv"  
 df = pd.read_csv(file_path)
 df=df.dropna()
-with st.sidebar:
-    st.title("Dataset Description")
-    st.write("This dataset contains information about crimes in the year 2023.")
-    st.write("It includes various attributes such as ID, Case Number, Date, Block, Primary Type, Location Description, Arrest, and more.")
+# with st.sidebar:
+#     st.title("Dataset Description")
+#     st.write("This dataset contains information about crimes in the year 2023.")
+#     st.write("It includes various attributes such as ID, Case Number, Date, Block, Primary Type, Location Description, Arrest, and more.")
 
-    st.subheader("Dataset Features")
-    crime_counts = df.columns
-    result = ", ".join(crime_counts)
-    st.write(result)
+#     st.subheader("Dataset Features")
+#     crime_counts = df.columns
+#     result = ", ".join(crime_counts)
+#     st.write(result)
 
 
-    st.write(f"The dataset consists of {len(df)} records.")
+#     st.write(f"The dataset consists of {len(df)} records.")
 
-    st.header("Exploring Crime Dataset")
-    st.subheader("Dataset Overview")
-    st.write("Here's an overview of the dataset:")
-    st.dataframe(df.head())
+#     st.header("Exploring Crime Dataset")
+#     st.subheader("Dataset Overview")
+#     st.write("Here's an overview of the dataset:")
+#     st.dataframe(df.head())
 
-    st.subheader("Dataset Statistics")
-    st.write("Here are some statistics about the dataset:")
-    st.write(df.describe())
+#     st.subheader("Dataset Statistics")
+#     st.write("Here are some statistics about the dataset:")
+#     st.write(df.describe())
 
-    st.subheader("Crime Types")
-    crime_counts = df["Primary Type"].value_counts()
-    st.bar_chart(crime_counts)
+#     st.subheader("Crime Types")
+#     crime_counts = df["Primary Type"].value_counts()
+#     st.bar_chart(crime_counts)
 
 
 query = st.text_input("Please do ask here to get insights from the CSV - ")
